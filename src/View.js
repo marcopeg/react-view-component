@@ -356,6 +356,10 @@ var outerStyle = (props, styles) => {
         _.borderRadius = props.borderRadius;
     }
 
+    // if (props.mask) {
+    //     _.overflow = 'hidden';
+    // }
+
     if (props.color !== null) {
         _.background = props.color;
     }
@@ -395,10 +399,6 @@ var innerStyle = (props, styles) => {
             case 'noscroll':
             default: break;
         }
-    }
-
-    if (props.mask) {
-        _.overflow = 'hidden';
     }
 
     // Apply paddings
@@ -450,6 +450,10 @@ var innerStyle = (props, styles) => {
     if (props.borderRadius !== null) {
         _.borderRadius = props.borderRadius;
     }
+
+    // if (props.mask) {
+    //     _.overflow = 'hidden';
+    // }
 
     if (props.contentColor !== null) {
         _.background = props.contentColor;
