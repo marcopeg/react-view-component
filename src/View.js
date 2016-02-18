@@ -110,15 +110,15 @@ export class View extends React.Component {
         width: null,
         height: null,
         margin: 0,
-        marginTop: 0,
-        marginRight: 0,
-        marginBottom: 0,
-        marginLeft: 0,
+        marginTop: null,
+        marginRight: null,
+        marginBottom: null,
+        marginLeft: null,
         padding: 0,
-        paddingTop: 0,
-        paddingRight: 0,
-        paddingBottom: 0,
-        paddingLeft: 0,
+        paddingTop: null,
+        paddingRight: null,
+        paddingBottom: null,
+        paddingLeft: null,
         border: null,
         borderTop: null,
         borderRight: null,
@@ -262,6 +262,7 @@ var viewStyle = (props, state) => {
 
 var outerStyle = (props, styles) => {
     var _ = {};
+    var margins = {};
 
     if (styles.view.width) {
         _.width = styles.view.width;
@@ -276,25 +277,51 @@ var outerStyle = (props, styles) => {
         _.overflow = 'hidden';
     }
 
+    // Apply margins
+
     if (props.margin) {
-        MARGINS.forEach(margin => _[margin] = props.margin);
+        MARGINS
+        .filter(marginName => props[marginName] === null)
+        .forEach(marginName => margins[marginName] = props.margin);
     }
 
     MARGINS
-    .filter(margin => props[margin])
-    .forEach(margin => _[margin] = props[margin]);
+    .filter(marginName => props[marginName] !== null)
+    .forEach(marginName => margins[marginName] = props[marginName]);
+
+    MARGINS_HORIZONTAL
+    .filter(marginName => margins[marginName] || margins[marginName] === 0)
+    .forEach(marginName => {
+        var marginValue = margins[marginName];
+        if (_.width && marginValue > 0 && marginValue < 1) {
+            marginValue = _.width * marginValue;
+        }
+        _[marginName] = marginValue;
+    });
+
+    MARGINS_VERTICAL
+    .filter(marginName => margins[marginName] || margins[marginName] === 0)
+    .forEach(marginName => {
+        var marginValue = margins[marginName];
+        if (_.height && marginValue > 0 && marginValue < 1) {
+            marginValue = _.height * marginValue;
+        }
+        _[marginName] = marginValue;
+    });
 
     if (_.width) {
         MARGINS_HORIZONTAL
-        .filter(margin => _[margin])
-        .forEach(margin => _.width -= _[margin]);
+        .filter(marginName => _[marginName])
+        .forEach(marginName => _.width -= _[marginName]);
     }
 
     if (_.height) {
         MARGINS_VERTICAL
-        .filter(margin => _[margin])
-        .forEach(margin => _.height -= _[margin]);
+        .filter(marginName => _[marginName])
+        .forEach(marginName => _.height -= _[marginName]);
     }
+
+    // Apply borders
 
     if (props.border) {
         BORDERS.forEach(border => _[border] = props.border);
@@ -319,6 +346,7 @@ var outerStyle = (props, styles) => {
 
 var innerStyle = (props, styles) => {
     var _ = {};
+    var paddings = {};
 
     if (styles.outer.height) {
         _.height = styles.outer.height;
@@ -348,13 +376,15 @@ var innerStyle = (props, styles) => {
         }
     }
 
+    // Apply paddings
+
     if (props.padding) {
         MARGINS.forEach(margin => _[margin] = props.padding);
     }
 
     PADDINGS
     .map((padding, i) => [padding, MARGINS[i]])
-    .filter(i => props[i[0]])
+    .filter(i => props[i[0]] || props[i[0]] === 0)
     .forEach(i => _[i[1]] = props[i[0]]);
 
     if (_.width) {
@@ -368,6 +398,8 @@ var innerStyle = (props, styles) => {
         .filter(margin => _[margin])
         .filter(margin => _[margin]).forEach(margin => _.height -= _[margin]);
     }
+
+    // Apply border properties
 
     if (props.borderRadius !== null) {
         _.borderRadius = props.borderRadius;
@@ -446,7 +478,11 @@ var flexChildren = (_children, mode, width, height) => {
             var childProps = horizontal ? { height } : { width };
 
             if (flex === 1 || flex === '*' || child.props.fill) {
-                childProps[dimensionPropName] = Math.floor(remainingSize / dynamicRegionsCount);
+                if (horizontal) {
+                    childProps[dimensionPropName] = Math.floor(remainingSize / dynamicRegionsCount);
+                } else {
+                    childProps[dimensionPropName] = Math.round(remainingSize / dynamicRegionsCount);
+                }
                 childProps.float = 'left';
                 return React.cloneElement(child, childProps);
 
