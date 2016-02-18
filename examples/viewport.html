@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Viewport</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <!-- Include dependencies -->
+    <script src="./lib/react/dist/react-with-addons.js"></script>
+    <script src="./lib/react/dist/react-dom.min.js"></script>
+    <script src="./lib/babel-core/5.8.23/browser.min.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+
+    <!-- ReactViewComponent Library -->
+    <script src="../dist/react-view-component.js"></script>
+</head>
+
+<!-- Start the app -->
+<body>
+    <div id="app" class="container" style="margin-top: 20px"></div>
+
+    <script type="text/babel">
+    // Just take a shortcut name
+    var View = ReactViewComponent;   
+
+    class DemoApp extends React.Component {
+        render() {
+            return (
+                <View viewport color="#fff">
+                    <View flex={60} color="#ddd" align="middleLeft" paddingLeft={10}>
+                        <h3>Awesome Website</h3>
+                    </View>
+                    <View flex={1} horizontal color="#eee">
+                        <View flex={0.35} borderRight="1px solid #fff">Menu</View>
+                        <View flex={1} borderLeft="1px solid #aaa" padding={10}>
+                            <View flex={0.75} color="#fff" borderRadius={10}>
+                                <View flex={30} paddingLeft={10}>
+                                    <h4>Article Title</h4>
+                                </View>
+                                <View flex={1} padding={10} scroll="mobile">
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                    <p>{lorem1}</p>
+                                </View>
+                            </View>
+                            <View flex={1} horizontal>
+                                <View flex={1} center childrenWidth={1} paddingRight={2}>
+                                    <img src="https://i.kinja-img.com/gawker-media/image/upload/xqkbwkexcl7udc5va7pn.jpg" className="img-responsive" />
+                                </View>
+                                <View flex={1} center childrenWidth={1} paddingLeft={2}>
+                                    <img src="http://www.petresortwillowwood.com/wp-content/uploads/2013/01/dogs-playing.jpg" className="img-responsive" />
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View flex={25} color="#aaa" borderTop="1px solid #444" borderBottom="1px solid #444" center>News Stripe</View>
+                    <View flex={60} horizontal color="#ddd">
+                        <View flex={1} center>Btn1</View>
+                        <View flex={1} center>Btn2</View>
+                        <View flex={1} center>Btn3</View>
+                        <View flex={1} center>Btn4</View>
+                    </View>
+                </View>
+            );
+        }
+    }
+
+    // Set timeout is needed to compute a correct screen size on iOS
+    setTimeout(() => ReactDOM.render(<DemoApp />, document.getElementById('app')));
+
+
+    /**
+     * Demo Stuff
+     */
+
+    var styles = {
+        demo: {
+            border: '1px dashed #aaa',
+            marginBottom: '2em',
+        },
+    };
+
+    var lorem1 = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
+    </script> 
+
+    <script>
+    // prevents body scroll on iOS 
+    document.ontouchstart = function(e) { 
+        var preventScroll = true;
+        var target = e.target;
+        var limit = 100;
+
+        while (target.tagName != 'BODY' && limit > 0) {
+            target = target.parentNode;
+            if (target.style.overflow === 'scroll') {
+                preventScroll = false;
+            }
+            limit--;
+        }
+
+        if (preventScroll) {
+            e.preventDefault();
+            return false;
+        }
+    }
+    </script>
+</body>
+</html>
