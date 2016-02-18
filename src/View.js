@@ -58,6 +58,7 @@ export class View extends React.Component {
     static propTypes = {
         color: React.PropTypes.string,
         contentColor: React.PropTypes.string,
+        shadow: React.PropTypes.string,
         width: React.PropTypes.number,
         height: React.PropTypes.number,
         margin: React.PropTypes.number,
@@ -86,6 +87,7 @@ export class View extends React.Component {
             'bottomLeft', 'bottomCenter', 'bottomRight',
         ]),
         center: React.PropTypes.bool,
+        mask: React.PropTypes.bool,
         viewport: React.PropTypes.bool,
         horizontal: React.PropTypes.bool,
         scroll: React.PropTypes.oneOf([
@@ -102,11 +104,14 @@ export class View extends React.Component {
         childrenWidth: React.PropTypes.number,
         childrenHeight: React.PropTypes.number,
         childrenColor: React.PropTypes.string,
+        style: React.PropTypes.object,
+        contentStyle: React.PropTypes.object,
     };
 
     static defaultProps = {
         color: null,
         contentColor: null,
+        shadow: null,
         width: null,
         height: null,
         margin: 0,
@@ -130,6 +135,7 @@ export class View extends React.Component {
         flex: null,
         align: null,
         center: null,
+        mask: false,
         viewport: null,
         horizontal: null,
         scroll: 'noscroll',
@@ -137,6 +143,8 @@ export class View extends React.Component {
         childrenWidth: null,
         childrenHeight: null,
         childrenColor: null,
+        style: {},
+        contentStyle: {},
     };
 
     state = {
@@ -175,10 +183,12 @@ export class View extends React.Component {
             borderRadius,
             color,
             contentColor,
+            shadow,
             direction,
             flex,
             align,
             center,
+            mask,
             viewport,
             horizontal,
             scroll,
@@ -187,6 +197,8 @@ export class View extends React.Component {
             childrenWidth,
             childrenHeight,
             childrenColor,
+            style,
+            contentStyle,
             ...props } = this.props;
 
         if (horizontal) {
@@ -230,7 +242,7 @@ export class View extends React.Component {
 }
 
 var viewStyle = (props, state) => {
-    var _ = {};
+    var _ = { ...props.style };
 
     if (props.width !== null) {
         _.width = props.width;
@@ -250,7 +262,6 @@ var viewStyle = (props, state) => {
 
     if (Object.keys(_).length) {
         _.display = 'block';
-        _.overflow = 'hidden';
 
         if (props.float !== null) {
             _.float = props.float;
@@ -261,7 +272,7 @@ var viewStyle = (props, state) => {
 };
 
 var outerStyle = (props, styles) => {
-    var _ = {};
+    var _ = { ...props.contentStyle };
     var margins = {};
 
     if (styles.view.width) {
@@ -274,7 +285,6 @@ var outerStyle = (props, styles) => {
 
     if (Object.keys(_).length) {
         _.display = 'block';
-        _.overflow = 'hidden';
     }
 
     // Apply margins
@@ -341,6 +351,10 @@ var outerStyle = (props, styles) => {
         _.background = props.color;
     }
 
+    if (props.shadow !== null) {
+        _.boxShadow = props.shadow;
+    }
+
     return _;
 };
 
@@ -370,10 +384,12 @@ var innerStyle = (props, styles) => {
                 _.WebkitOverflowScrolling = 'touch';
                 break;
             case 'noscroll':
-            default:
-                _.overflow = 'hidden';
-                break;
+            default: break;
         }
+    }
+
+    if (props.mask) {
+        _.overflow = 'hidden';
     }
 
     // Apply paddings
