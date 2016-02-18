@@ -90,6 +90,7 @@ export class View extends React.Component {
         mask: React.PropTypes.bool,
         viewport: React.PropTypes.bool,
         horizontal: React.PropTypes.bool,
+        isVisible: React.PropTypes.bool,
         scroll: React.PropTypes.oneOf([
             'noscroll',
             'auto',
@@ -138,6 +139,7 @@ export class View extends React.Component {
         mask: false,
         viewport: null,
         horizontal: null,
+        isVisible: true,
         scroll: 'noscroll',
         float: null,
         childrenWidth: null,
@@ -191,6 +193,7 @@ export class View extends React.Component {
             mask,
             viewport,
             horizontal,
+            isVisible,
             scroll,
             float,
             children,
@@ -229,6 +232,10 @@ export class View extends React.Component {
             );
         }
 
+        if (!isVisible) {
+            return null;
+        }
+
         return (
             <div {...this.props} style={styles.view}>
                 <div style={styles.outer}>
@@ -262,6 +269,7 @@ var viewStyle = (props, state) => {
 
     if (Object.keys(_).length) {
         _.display = 'block';
+        _.overflow = 'auto';
 
         if (props.float !== null) {
             _.float = props.float;
@@ -285,6 +293,7 @@ var outerStyle = (props, styles) => {
 
     if (Object.keys(_).length) {
         _.display = 'block';
+        _.overflow = 'auto';
     }
 
     // Apply margins
