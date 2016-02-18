@@ -379,13 +379,34 @@ var innerStyle = (props, styles) => {
     // Apply paddings
 
     if (props.padding) {
-        MARGINS.forEach(margin => _[margin] = props.padding);
+        PADDINGS
+        .filter(paddingName => props[paddingName] === null)
+        .forEach(paddingName => paddings[paddingName] = props.padding);
     }
 
     PADDINGS
-    .map((padding, i) => [padding, MARGINS[i]])
-    .filter(i => props[i[0]] || props[i[0]] === 0)
-    .forEach(i => _[i[1]] = props[i[0]]);
+    .filter(paddingName => props[paddingName] !== null)
+    .forEach(paddingName => paddings[paddingName] = props[paddingName]);
+
+    PADDINGS_HORIZONTAL
+    .filter(paddingName => paddings[paddingName] || paddings[paddingName] === 0)
+    .forEach(paddingName => {
+        var paddingValue = paddings[paddingName];
+        if (_.width && paddingValue > 0 && paddingValue < 1) {
+            paddingValue = _.width * paddingValue;
+        }
+        _[paddingName.replace('padding', 'margin')] = paddingValue;
+    });
+
+    PADDINGS_VERTICAL
+    .filter(paddingName => paddings[paddingName] || paddings[paddingName] === 0)
+    .forEach(paddingName => {
+        var paddingValue = paddings[paddingName];
+        if (_.height && paddingValue > 0 && paddingValue < 1) {
+            paddingValue = _.height * paddingValue;
+        }
+        _[paddingName.replace('padding', 'margin')] = paddingValue;
+    });
 
     if (_.width) {
         MARGINS_HORIZONTAL
@@ -443,10 +464,7 @@ var flexChildren = (_children, mode, width, height) => {
                     flex = totalSize * flex;
                 }
 
-                // there is a problem with a white space below each block
-                // in the demo. I have no idea what the hell is that and why it is caused
                 childProps.float = 'left';
-
                 childProps[dimensionPropName] = flex;
                 remainingSize -= flex;
                 return React.cloneElement(child, childProps);
