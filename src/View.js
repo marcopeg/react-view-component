@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { getSize } from './viewport';
+import { getSize, noScroll } from './viewport';
 
 const BORDERS_VERTICAL = [
     'borderTop',
@@ -50,6 +50,10 @@ const PADDINGS = [
 export class View extends React.Component {
 
     static displayName = 'View';
+
+    // Utility methods
+    static noScroll = noScroll;
+    static getViewportSize = getSize;
 
     static propTypes = {
         color: React.PropTypes.string,
