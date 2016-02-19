@@ -173,7 +173,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var flex = _props.flex;
 	            var align = _props.align;
 	            var center = _props.center;
-	            var mask = _props.mask;
 	            var viewport = _props.viewport;
 	            var horizontal = _props.horizontal;
 	            var isVisible = _props.isVisible;
@@ -186,7 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var style = _props.style;
 	            var contentStyle = _props.contentStyle;
 
-	            var props = _objectWithoutProperties(_props, ['mode', 'width', 'height', 'margin', 'border', 'borderTop', 'borderRight', 'borderBottom', 'borderLeft', 'borderRadius', 'color', 'contentColor', 'shadow', 'direction', 'flex', 'align', 'center', 'mask', 'viewport', 'horizontal', 'isVisible', 'scroll', 'float', 'children', 'childrenWidth', 'childrenHeight', 'childrenColor', 'style', 'contentStyle']);
+	            var props = _objectWithoutProperties(_props, ['mode', 'width', 'height', 'margin', 'border', 'borderTop', 'borderRight', 'borderBottom', 'borderLeft', 'borderRadius', 'color', 'contentColor', 'shadow', 'direction', 'flex', 'align', 'center', 'viewport', 'horizontal', 'isVisible', 'scroll', 'float', 'children', 'childrenWidth', 'childrenHeight', 'childrenColor', 'style', 'contentStyle']);
 
 	            if (horizontal) {
 	                direction = 'horizontal';
@@ -259,11 +258,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    flex: _react2.default.PropTypes.number,
 	    align: _react2.default.PropTypes.oneOf(['center', 'topLeft', 'topCenter', 'topRight', 'middleLeft', 'middleCenter', 'middleRight', 'bottomLeft', 'bottomCenter', 'bottomRight']),
 	    center: _react2.default.PropTypes.bool,
-	    mask: _react2.default.PropTypes.bool,
 	    viewport: _react2.default.PropTypes.bool,
 	    horizontal: _react2.default.PropTypes.bool,
 	    isVisible: _react2.default.PropTypes.bool,
-	    scroll: _react2.default.PropTypes.oneOf(['noscroll', 'auto', 'mobile']),
+	    scroll: _react2.default.PropTypes.oneOf(['noscroll', 'auto', 'mobile', true, false]),
 	    float: _react2.default.PropTypes.oneOf(['left', 'right']),
 	    children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.object, _react2.default.PropTypes.array, _react2.default.PropTypes.string]),
 	    childrenWidth: _react2.default.PropTypes.number,
@@ -298,7 +296,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    flex: null,
 	    align: null,
 	    center: null,
-	    mask: false,
 	    viewport: null,
 	    horizontal: null,
 	    isVisible: true,
@@ -429,10 +426,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _.borderRadius = props.borderRadius;
 	    }
 
-	    // if (props.mask) {
-	    //     _.overflow = 'hidden';
-	    // }
-
 	    if (props.color !== null) {
 	        _.background = props.color;
 	    }
@@ -464,15 +457,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (Object.keys(_).length) {
 	        _.display = 'block';
+	        _.overflow = 'hidden';
 
 	        switch (props.scroll) {
 	            case 'auto':
 	                _.overflow = 'auto';
 	                break;
+	            case true:
 	            case 'mobile':
 	                _.overflow = 'scroll';
 	                _.WebkitOverflowScrolling = 'touch';
 	                break;
+	            case false:
 	            case 'noscroll':
 	            default:
 	                break;
@@ -539,10 +535,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _.borderRadius = props.borderRadius;
 	    }
 
-	    // if (props.mask) {
-	    //     _.overflow = 'hidden';
-	    // }
-
 	    if (props.contentColor !== null) {
 	        _.background = props.contentColor;
 	    }
@@ -568,6 +560,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (child.type && child.type.displayName === 'View') {
 	            var flex = child.props.flex;
 	            childProps = horizontal ? { height: height } : { width: width };
+
+	            // Respect explicit dimensions of children
+
+	            if (child.props.width) {
+	                childProps.width = child.props.width;
+	            }
+
+	            if (child.props.height) {
+	                childProps.height = child.props.height;
+	            }
 
 	            // Flex child views
 
