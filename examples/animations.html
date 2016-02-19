@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <!-- Include dependencies -->
+    <script src="./lib/react/dist/react-with-addons.js"></script>
+    <script src="./lib/react/dist/react-dom.js"></script>
+    <script src="./lib/babel-core/5.8.23/browser.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css">
+
+    <!-- ReactViewComponent Library -->
+    <script src="../dist/react-view-component.js"></script>
+</head>
+
+<!-- Start the app -->
+<body>
+    <div id="app" class="container" style="margin-top: 20px"></div>
+    <script type="text/babel">
+
+    var View = ReactViewComponent;
+
+    var styles = {
+        demo: {
+            marginBottom: '2em',
+        },
+    };
+
+    var lorem1 = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
+
+    class DemoApp extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                vp1: false,
+                vp2: false,
+            };
+        }
+        render() {
+            return (
+                <div>
+                    <div className="page-header">
+                        <h1>View Component</h1>
+                    </div>
+
+                    <h5>{'No Animation'}</h5>
+                    <div style={styles.demo}>
+                        <span
+                            className="btn btn-primary"
+                            onClick={() => this.setState({vp1:true})}>Open Viewport</span>
+                        <View viewport
+                            isVisible={this.state.vp1}
+                            color="#ddd"
+                            border="4px solid red"
+                            padding={0.1}>
+
+                            <h4>This is a Viewport</h4>
+                            <span
+                                className="btn btn-primary"
+                                onClick={() => this.setState({vp1:false})}>Close</span>
+                        </View>
+                    </div>
+
+                    <h5>{'Fade in/out'}</h5>
+                    <div style={styles.demo}>
+                        <span
+                            className="btn btn-primary"
+                            onClick={() => this.setState({vp2:true})}>Open Viewport</span>
+                        <View viewport
+                            isVisible={this.state.vp2}
+                            enterAnimation="slideLeft"
+                            leaveAnimation="slideRight"
+                            color="#ddd"
+                            border="4px solid red"
+                            padding={0.1}>
+
+                            <h4>SlideDown Viewport</h4>
+                            <span
+                                className="btn btn-primary"
+                                onClick={() => this.setState({vp2:false})}>Close</span>
+                        </View>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    setTimeout(() => ReactDOM.render(<DemoApp />, document.getElementById('app')));
+    </script>    
+</body>
+</html>

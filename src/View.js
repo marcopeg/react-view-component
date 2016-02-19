@@ -108,6 +108,20 @@ export class View extends React.Component {
         childrenColor: React.PropTypes.string,
         style: React.PropTypes.object,
         contentStyle: React.PropTypes.object,
+        enterAnimation: React.PropTypes.oneOf([
+            'fade',
+            'slideDown',
+            'slideUp',
+            'slideRight',
+            'slideLeft',
+        ]),
+        leaveAnimation: React.PropTypes.oneOf([
+            'fade',
+            'slideDown',
+            'slideUp',
+            'slideRight',
+            'slideLeft',
+        ]),
     };
 
     static defaultProps = {
@@ -147,11 +161,15 @@ export class View extends React.Component {
         childrenColor: null,
         style: {},
         contentStyle: {},
+        enterAnimation: null,
+        leaveAnimation: null,
     };
 
     state = {
         width: null,
         height: null,
+        isVisible: this.props.isVisible,
+        animationClass: this.props.isVisible ? 'visible' : 'offscreen',
     };
 
     componentWillMount() {
@@ -170,6 +188,44 @@ export class View extends React.Component {
     onWindowResize = () => {
         this.setState({ ...getSize() });
     };
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.isVisible && !nextProps.isVisible) {
+            this.willHide();
+        }
+        
+        if (!this.props.isVisible && nextProps.isVisible) {
+            this.willShow();
+        }
+    }
+
+    willShow() {
+        console.log('willShow()');
+        this.setAnimationClass('beforeEnter');
+        setTimeout(() => {
+            this.setAnimationClass('entering');
+            setTimeout(() => {
+                this.setAnimationClass('afterEnter');
+                setTimeout(() => this.setAnimationClass('visible'));
+            }, 300);
+        });
+    }
+
+    willHide() {
+        console.log('willHide()');
+        this.setAnimationClass('beforeLeave');
+        setTimeout(() => {
+            this.setAnimationClass('leaving');
+            setTimeout(() => {
+                this.setAnimationClass('afterLeave');
+                setTimeout(() => this.setAnimationClass('offscreen'));
+            }, 300);
+        });
+    }
+
+    setAnimationClass = val => this.setState({
+        animationClass: val,
+    });
 
     render() {
         var {
@@ -201,7 +257,11 @@ export class View extends React.Component {
             childrenColor,
             style,
             contentStyle,
+            enterAnimation,
+            leaveAnimation,
             ...props } = this.props;
+
+        var { animationClass } = this.state;
 
         if (horizontal) {
             direction = 'horizontal';
@@ -231,12 +291,35 @@ export class View extends React.Component {
             );
         }
 
-        if (!isVisible) {
+        var className = [];
+
+        if (isVisible && enterAnimation) {
+            styles.view.display = null;
+            className.push(enterAnimation);
+            className.push(enterAnimation + '__' + animationClass);
+        }
+
+        if (!isVisible && leaveAnimation) {
+            styles.view.display = null;
+            className.push(leaveAnimation);
+            className.push(leaveAnimation + '__' + animationClass);
+        }
+
+        if (!isVisible && leaveAnimation === null) {
             return null;
         }
 
+
+        // var className = [
+        //     'animated',
+        // ];
+
+        // if (!isVisible) {
+        //     className.push('animated__hidden');
+        // }
+
         return (
-            <div {...this.props} style={styles.view}>
+            <div {...this.props} style={styles.view} className={className.join(' ')}>
                 <div style={styles.outer}>
                     <div style={styles.inner}>
                         {children}
