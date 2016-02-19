@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <!-- Include dependencies -->
+    <script src="./lib/react/dist/react-with-addons.js"></script>
+    <script src="./lib/react/dist/react-dom.js"></script>
+    <script src="./lib/babel-core/5.8.23/browser.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css">
+
+    <!-- ReactViewComponent Library -->
+    <script src="../dist/react-view-component.js"></script>
+</head>
+
+<!-- Start the app -->
+<body>
+    <div id="app" class="container" style="margin-top: 20px"></div>
+    <script type="text/babel">
+
+    var View = ReactViewComponent;
+
+    var styles = {
+        demo: {
+            border: '1px dashed #aaa',
+            marginBottom: '2em',
+        },
+    };
+
+    var lorem1 = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
+
+    class DemoApp extends React.Component {
+        render() {
+            return (
+                <div>
+    
+
+                    <h5>{'View'}</h5>
+                    <div style={styles.demo}>
+
+
+
+
+
+
+                        <View
+                            color="yellow"
+                            width={250}
+                            height={250}
+                            margin={10}
+                            center>
+
+                            <View width={1} borderRadius={10} shadow="0 0 10px #444" margin={10}>
+                                <img src="https://i.kinja-img.com/gawker-media/image/upload/xqkbwkexcl7udc5va7pn.jpg" className="img-responsive" />
+                            </View>
+
+                        </View>
+
+
+                    </div>
+
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(<DemoApp />, document.getElementById('app'));
+    </script>    
+</body>
+</html>

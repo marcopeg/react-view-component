@@ -87,7 +87,6 @@ export class View extends React.Component {
             'bottomLeft', 'bottomCenter', 'bottomRight',
         ]),
         center: React.PropTypes.bool,
-        mask: React.PropTypes.bool,
         viewport: React.PropTypes.bool,
         horizontal: React.PropTypes.bool,
         isVisible: React.PropTypes.bool,
@@ -95,6 +94,8 @@ export class View extends React.Component {
             'noscroll',
             'auto',
             'mobile',
+            true,
+            false,
         ]),
         float: React.PropTypes.oneOf(['left', 'right']),
         children: React.PropTypes.oneOfType([
@@ -136,7 +137,6 @@ export class View extends React.Component {
         flex: null,
         align: null,
         center: null,
-        mask: false,
         viewport: null,
         horizontal: null,
         isVisible: true,
@@ -190,7 +190,6 @@ export class View extends React.Component {
             flex,
             align,
             center,
-            mask,
             viewport,
             horizontal,
             isVisible,
@@ -356,10 +355,6 @@ var outerStyle = (props, styles) => {
         _.borderRadius = props.borderRadius;
     }
 
-    // if (props.mask) {
-    //     _.overflow = 'hidden';
-    // }
-
     if (props.color !== null) {
         _.background = props.color;
     }
@@ -387,15 +382,18 @@ var innerStyle = (props, styles) => {
 
     if (Object.keys(_).length) {
         _.display = 'block';
+        _.overflow = 'hidden';
 
         switch (props.scroll) {
             case 'auto':
                 _.overflow = 'auto';
                 break;
+            case true:
             case 'mobile':
                 _.overflow = 'scroll';
                 _.WebkitOverflowScrolling = 'touch';
                 break;
+            case false:
             case 'noscroll':
             default: break;
         }
@@ -451,10 +449,6 @@ var innerStyle = (props, styles) => {
         _.borderRadius = props.borderRadius;
     }
 
-    // if (props.mask) {
-    //     _.overflow = 'hidden';
-    // }
-
     if (props.contentColor !== null) {
         _.background = props.contentColor;
     }
@@ -480,6 +474,16 @@ var flexChildren = (_children, mode, width, height) => {
         if (child.type && child.type.displayName === 'View') {
             var flex = child.props.flex;
             childProps = horizontal ? { height } : { width };
+
+            // Respect explicit dimensions of children
+
+            if (child.props.width) {
+                childProps.width = child.props.width;
+            }
+
+            if (child.props.height) {
+                childProps.height = child.props.height;
+            }
 
             // Flex child views
 
