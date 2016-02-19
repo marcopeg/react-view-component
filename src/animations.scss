@@ -1,0 +1,324 @@
+
+$animation-speed: .3s;
+$animation-ease: ease-in-out;
+
+
+
+.none__offscreen,
+.none__beforeLeave,
+.none__leaving,
+.none__afterLeave {
+    display: none;
+}
+
+.none__visible,
+.none__beforeEnter,
+.none__entering,
+.none__afterEnter {
+    display: block;
+}
+
+
+
+.fade {
+    transition: opacity $animation-speed $animation-ease;
+}
+
+.fade__offscreen {
+    display: none;
+}
+
+.fade__beforeEnter {
+    display: block;
+    opacity: 0;
+}
+
+.fade__entering {
+    opacity: 1;
+}
+
+.fade__visible {
+    display: block;
+    opacity: 1;
+}
+
+.fade__beforeLeave {}
+
+.fade__leaving {
+    opacity: 0;
+}
+
+.fade__afterLeave {
+
+}
+
+
+
+// .slideDown {
+//     display: none;
+// }
+
+.slideDown__offscreen {
+    display: none;
+}
+
+.slideDown__beforeEnter {
+    display: block;
+    transform: translate3d(0, -100%, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideDown__entering {
+    display: block;
+    transition: transform $animation-speed $animation-ease;
+    transform: translate3d(0, 0, 0);
+}
+
+// .slideDown__afterEnter {}
+
+.slideDown__visible {
+    display: block;
+    transform: translate3d(0, 0, 0);
+}
+
+.slideDown__beforeLeave {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideDown__leaving {
+    display: block;
+    transition: transform $animation-speed $animation-ease;
+    transform: translate3d(0, 100%, 0);
+}
+
+.slideDown__afterLeave {
+    display: none;
+}
+
+
+
+
+// .slideUp {
+//     display: block;
+//     transition: transform $animation-speed $animation-ease;
+// }
+
+.slideUp__offscreen {
+    display: none;
+}
+
+.slideUp__beforeEnter {
+    display: block;
+    transform: translate3d(0, 100%, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideUp__entering {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+// .slideUp__afterEnter {}
+
+.slideUp__visible {
+    display: block;
+    transform: translate3d(0, 0, 0);
+}
+
+.slideUp__beforeLeave {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideUp__leaving {
+    display: block;
+    transform: translate3d(0, -100%, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideUp__afterLeave {
+    display: none;
+}
+
+
+
+
+
+
+// .slideLeft {
+//     display: block;
+//     transition: transform $animation-speed $animation-ease;
+// }
+
+.slideLeft__offscreen {
+    display: none;
+}
+
+.slideLeft__beforeEnter {
+    display: block;
+    transform: translate3d(100%, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideLeft__entering {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideLeft__visible {
+    display: block;
+    transform: translate3d(0);
+}
+
+.slideLeft__beforeLeave {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideLeft__leaving {
+    display: block;
+    transform: translate3d(-100%, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideLeft__afterLeave {
+    display: none;
+}
+
+
+
+
+
+
+.slideRight__offscreen {
+    display: none;
+}
+
+.slideRight__beforeEnter {
+    display: block;
+    transform: translate3d(-100%, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideRight__entering {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideRight__visible {
+    display: block;
+    transform: translate3d(0);
+}
+
+.slideRight__beforeLeave {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideRight__leaving {
+    display: block;
+    transform: translate3d(100%, 0, 0);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.slideRight__afterLeave {
+    display: none;
+}
+
+
+
+
+
+
+.explode__offscreen {
+    display: none;
+}
+
+.explode__beforeEnter {
+    display: block;
+    transform: scale(0.01);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.explode__entering {
+    display: block;
+    transform: scale(1);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.explode__visible {
+    display: block;
+    transform: scale(1);
+}
+
+.explode__beforeLeave {
+    display: block;
+    transform: scale(1);
+    opacity: 1;
+    transition: all $animation-speed $animation-ease;
+}
+
+.explode__leaving {
+    display: block;
+    opacity: 0.5;
+    transform: scale(2);
+    transition: all $animation-speed $animation-ease;
+}
+
+.explode__afterLeave {
+    display: none;
+}
+
+
+
+
+
+
+
+.implode__offscreen {
+    display: none;
+}
+
+.implode__beforeEnter {
+    display: block;
+    opacity: 0.2;
+    transform: scale(2);
+    transition: all $animation-speed $animation-ease;
+}
+
+.implode__entering {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+    transition: all $animation-speed $animation-ease;
+}
+
+.implode__visible {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.implode__beforeLeave {
+    display: block;
+    transform: scale(1);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.implode__leaving {
+    display: block;
+    transform: scale(0.01);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.implode__afterLeave {
+    display: none;
+}
