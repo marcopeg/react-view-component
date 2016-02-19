@@ -115,6 +115,8 @@ export class View extends React.Component {
             'slideUp',
             'slideRight',
             'slideLeft',
+            'explode',
+            'implode',
         ]),
         leaveAnimation: React.PropTypes.oneOf([
             'none',
@@ -123,6 +125,8 @@ export class View extends React.Component {
             'slideUp',
             'slideRight',
             'slideLeft',
+            'explode',
+            'implode',
         ]),
     };
 

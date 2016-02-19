@@ -232,3 +232,93 @@ $animation-ease: ease-in-out;
 .slideRight__afterLeave {
     display: none;
 }
+
+
+
+
+
+
+.explode__offscreen {
+    display: none;
+}
+
+.explode__beforeEnter {
+    display: block;
+    transform: scale(0.01);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.explode__entering {
+    display: block;
+    transform: scale(1);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.explode__visible {
+    display: block;
+    transform: scale(1);
+}
+
+.explode__beforeLeave {
+    display: block;
+    transform: scale(1);
+    opacity: 1;
+    transition: all $animation-speed $animation-ease;
+}
+
+.explode__leaving {
+    display: block;
+    opacity: 0.5;
+    transform: scale(2);
+    transition: all $animation-speed $animation-ease;
+}
+
+.explode__afterLeave {
+    display: none;
+}
+
+
+
+
+
+
+
+.implode__offscreen {
+    display: none;
+}
+
+.implode__beforeEnter {
+    display: block;
+    opacity: 0.2;
+    transform: scale(2);
+    transition: all $animation-speed $animation-ease;
+}
+
+.implode__entering {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+    transition: all $animation-speed $animation-ease;
+}
+
+.implode__visible {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.implode__beforeLeave {
+    display: block;
+    transform: scale(1);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.implode__leaving {
+    display: block;
+    transform: scale(0.01);
+    transition: transform $animation-speed $animation-ease;
+}
+
+.implode__afterLeave {
+    display: none;
+}
