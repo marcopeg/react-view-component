@@ -109,6 +109,7 @@ export class View extends React.Component {
         style: React.PropTypes.object,
         contentStyle: React.PropTypes.object,
         enterAnimation: React.PropTypes.oneOf([
+            'none',
             'fade',
             'slideDown',
             'slideUp',
@@ -116,6 +117,7 @@ export class View extends React.Component {
             'slideLeft',
         ]),
         leaveAnimation: React.PropTypes.oneOf([
+            'none',
             'fade',
             'slideDown',
             'slideUp',
@@ -200,7 +202,6 @@ export class View extends React.Component {
     }
 
     willShow() {
-        console.log('willShow()');
         this.setAnimationClass('beforeEnter');
         setTimeout(() => {
             this.setAnimationClass('entering');
@@ -212,7 +213,6 @@ export class View extends React.Component {
     }
 
     willHide() {
-        console.log('willHide()');
         this.setAnimationClass('beforeLeave');
         setTimeout(() => {
             this.setAnimationClass('leaving');

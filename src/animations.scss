@@ -4,6 +4,22 @@ $animation-ease: ease-in-out;
 
 
 
+.none__offscreen,
+.none__beforeLeave,
+.none__leaving,
+.none__afterLeave {
+    display: none;
+}
+
+.none__visible,
+.none__beforeEnter,
+.none__entering,
+.none__afterEnter {
+    display: block;
+}
+
+
+
 .fade {
     transition: opacity $animation-speed $animation-ease;
 }

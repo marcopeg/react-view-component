@@ -33,54 +33,63 @@
         constructor(props) {
             super(props);
             this.state = {
-                vp1: false,
-                vp2: false,
+                enterAnimation: 'slideDown',
+                leaveAnimation: 'slideUp',
+                viewportIsVisible: false,
             };
         }
         render() {
+
+            var animations = ['none', 'fade', 'slideDown', 'slideUp', 'slideLeft', 'slideRight'].map(a =>
+                <option key={a} value={a}>{a}</option>
+            );
+
             return (
                 <div>
                     <div className="page-header">
-                        <h1>View Component</h1>
+                        <h1>Viewport Animations</h1>
                     </div>
 
-                    <h5>{'No Animation'}</h5>
-                    <div style={styles.demo}>
-                        <span
-                            className="btn btn-primary"
-                            onClick={() => this.setState({vp1:true})}>Open Viewport</span>
-                        <View viewport
-                            isVisible={this.state.vp1}
-                            color="#ddd"
-                            border="4px solid red"
-                            padding={0.1}>
-
-                            <h4>This is a Viewport</h4>
+                    {/* Animations Config Panel */}
+                    <View horizontal width={340} height={60} color="#eee" borderRadius={5}>
+                        <View flex={75} align="bottomLeft" padding={5}>
                             <span
                                 className="btn btn-primary"
-                                onClick={() => this.setState({vp1:false})}>Close</span>
+                                onClick={() => this.setState({viewportIsVisible:true})}>Open</span>
                         </View>
-                    </div>
+                        <View flex={1} align="bottomLeft" padding={5}>
+                            Enter:<br />
+                            <select
+                                onChange={e => this.setState({ enterAnimation: e.target.value })}
+                                defaultValue={this.state.enterAnimation}>{animations}</select>
+                        </View>
+                        <View flex={1} align="bottomLeft" padding={5}>
+                            Leave:<br />
+                            <select
+                                onChange={e => this.setState({ leaveAnimation: e.target.value })}
+                                defaultValue={this.state.leaveAnimation}>{animations}</select>
+                        </View>
+                    </View>
 
-                    <h5>{'Fade in/out'}</h5>
-                    <div style={styles.demo}>
+                    
+                    {/* Dynamic Viewport */}
+                    <View viewport
+                        isVisible={this.state.viewportIsVisible}
+                        enterAnimation={this.state.enterAnimation}
+                        leaveAnimation={this.state.leaveAnimation}
+                        color="rgba(209, 226, 255, 0.95)"
+                        border="3px solid #4086FF"
+                        padding={0.1}
+                        paddingTop={0.6}>
+
+                        <h4>Animated Viewport</h4>
                         <span
-                            className="btn btn-primary"
-                            onClick={() => this.setState({vp2:true})}>Open Viewport</span>
-                        <View viewport
-                            isVisible={this.state.vp2}
-                            enterAnimation="slideLeft"
-                            leaveAnimation="slideRight"
-                            color="#ddd"
-                            border="4px solid red"
-                            padding={0.1}>
+                            className="btn btn-success"
+                            onClick={() => this.setState({viewportIsVisible:false})}>Close</span>
 
-                            <h4>SlideDown Viewport</h4>
-                            <span
-                                className="btn btn-primary"
-                                onClick={() => this.setState({vp2:false})}>Close</span>
-                        </View>
-                    </div>
+                    </View>
+
+
                 </div>
             );
         }
