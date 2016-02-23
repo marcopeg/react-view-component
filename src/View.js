@@ -47,6 +47,8 @@ const PADDINGS = [
     ...PADDINGS_HORIZONTAL,
 ];
 
+const ANIMATION_DURATION = 1000;
+
 export class View extends React.Component {
 
     static displayName = 'View';
@@ -212,7 +214,7 @@ export class View extends React.Component {
             setTimeout(() => {
                 this.setAnimationClass('afterEnter');
                 setTimeout(() => this.setAnimationClass('visible'));
-            }, 300);
+            }, ANIMATION_DURATION);
         });
     }
 
@@ -223,7 +225,7 @@ export class View extends React.Component {
             setTimeout(() => {
                 this.setAnimationClass('afterLeave');
                 setTimeout(() => this.setAnimationClass('offscreen'));
-            }, 300);
+            }, ANIMATION_DURATION);
         });
     }
 

@@ -1,6 +1,8 @@
 
-$animation-speed: .3s;
-$animation-ease: ease-in-out;
+// cubic-beizer(0.12,0.89,0.27,0.96)
+
+$animation-speed: .7s;
+$animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
 
 
 
