@@ -2,6 +2,6 @@
  * ReactViewComponent Library
  */
 
-require('./animations.scss');
+require('../src/animations.scss');
  
 module.exports = require('./View').View;

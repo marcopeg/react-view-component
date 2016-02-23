@@ -47,7 +47,7 @@ const PADDINGS = [
     ...PADDINGS_HORIZONTAL,
 ];
 
-const ANIMATION_DURATION = 1000;
+const ANIMATION_DURATION = 410;
 
 export class View extends React.Component {
 
