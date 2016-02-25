@@ -2,6 +2,10 @@
  * ReactViewComponent Library
  */
 
-require('../src/animations.scss');
+require('../scss/animations.scss');
+
+import { View, nestedView } from './View';
+
+View.nestedView = nestedView;
  
-module.exports = require('./View').View;
+module.exports = View;

@@ -1,6 +1,6 @@
 {
   "name": "react-view-component",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Provides a simple API to space management and layouting for WebApps",
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
@@ -25,6 +25,7 @@
   "files": [
     "lib",
     "src",
+    "scss",
     "dist"
   ],
   "keywords": [
@@ -33,7 +34,9 @@
     "layout",
     "library",
     "react",
-    "reactjs"
+    "reactjs",
+    "animations",
+    "viewport"
   ],
   "author": "Marco Pegoraro <hello@marcopeg.com> (http://github.com/marcopeg)",
   "license": "MIT",

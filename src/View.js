@@ -47,7 +47,7 @@ const PADDINGS = [
     ...PADDINGS_HORIZONTAL,
 ];
 
-const ANIMATION_DURATION = 410;
+const ANIMATION_DURATION = 610;
 
 export class View extends React.Component {
 
@@ -336,6 +336,18 @@ export class View extends React.Component {
     };
 }
 
+
+/**
+ * Use this decorator to wrap a View into a custom component and being able
+ * to nest those components into an existing View structure
+ */
+export function nestedView() {
+    return function (WrappedComponent) {
+        WrappedComponent.behavesLikeAView = true;
+        return WrappedComponent;
+    };
+}
+
 var viewStyle = (props, state) => {
     var _ = { ...props.style };
 
@@ -456,7 +468,10 @@ var outerStyle = (props, styles) => {
 };
 
 var innerStyle = (props, styles) => {
-    var _ = {};
+    var _ = {
+        position: 'relative',
+    };
+
     var paddings = {};
 
     if (styles.outer.height) {
@@ -549,9 +564,9 @@ var borderSize = border => {
     return parseInt(border, 10) || 0;
 };
 
-var flexChildren = (_children, mode, width, height) => {
+var flexChildren = (_children, orientation, width, height) => {
 
-    var horizontal = (mode === 'horizontal');
+    var horizontal = (orientation === 'horizontal');
     var totalSize = horizontal ? width : height;
     var remainingSize = totalSize;
     var dimensionPropName = horizontal ? 'width' : 'height';
@@ -560,7 +575,8 @@ var flexChildren = (_children, mode, width, height) => {
     // fixed sized elements
     var children = React.Children.map(_children, child => {
         var childProps = {};
-        if (child.type && child.type.displayName === 'View') {
+
+        if (child.type && (child.type.displayName === 'View' || child.type.behavesLikeAView)) {
             var flex = child.props.flex;
             childProps = horizontal ? { height } : { width };
 
@@ -613,7 +629,7 @@ var flexChildren = (_children, mode, width, height) => {
     });
 
     children = React.Children.map(children, child => {
-        if (child.type && child.type.displayName === 'View') {
+        if (child.type && (child.type.displayName === 'View' || child.type.behavesLikeAView)) {
             var flex = child.props.flex;
             var childProps = horizontal ? { height } : { width };
 
@@ -719,3 +735,4 @@ var alignStyle = (props, styles) => {
     }
     return _;
 };
+

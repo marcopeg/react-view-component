@@ -1,8 +1,22 @@
 
 // cubic-beizer(0.12,0.89,0.27,0.96)
 
-$animation-speed: .4s;
+$animation-speed: 0.6s;
 $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
+
+
+.none,
+.fade,
+.slideDown,
+.slideUp,
+.slideLeft,
+.slideRight,
+.explode,
+.implode {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
 
 
@@ -37,6 +51,7 @@ $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
 
 .fade__entering {
     opacity: 1;
+    display: block;
 }
 
 .fade__visible {
@@ -56,9 +71,10 @@ $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
 
 
 
-// .slideDown {
-//     display: none;
-// }
+
+
+
+
 
 .slideDown__offscreen {
     display: none;
@@ -102,10 +118,7 @@ $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
 
 
 
-// .slideUp {
-//     display: block;
-//     transition: transform $animation-speed $animation-ease;
-// }
+
 
 .slideUp__offscreen {
     display: none;
@@ -151,10 +164,7 @@ $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
 
 
 
-// .slideLeft {
-//     display: block;
-//     transition: transform $animation-speed $animation-ease;
-// }
+
 
 .slideLeft__offscreen {
     display: none;
@@ -192,6 +202,7 @@ $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
 .slideLeft__afterLeave {
     display: none;
 }
+
 
 
 
@@ -240,6 +251,7 @@ $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
 
 
 
+
 .explode__offscreen {
     display: none;
 }
@@ -278,6 +290,7 @@ $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
 .explode__afterLeave {
     display: none;
 }
+
 
 
 
