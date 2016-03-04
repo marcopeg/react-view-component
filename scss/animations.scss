@@ -54,6 +54,11 @@ $animation-ease: cubic-bezier(0.13, 0.68, 0.27, 0.97);
     display: block;
 }
 
+.fade__afterEnter {
+    opacity: 1;
+    display: block;
+}
+
 .fade__visible {
     display: block;
     opacity: 1;
