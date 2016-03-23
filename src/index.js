@@ -2,10 +2,12 @@
  * ReactViewComponent Library
  */
 
-require('../scss/animations.scss');
+import _View from './View';
+import _nestedView from './nested-view';
+import _getSize from './get-size';
+import _noScroll from './no-scroll';
 
-import { View, nestedView } from './View';
-
-View.nestedView = nestedView;
- 
-module.exports = View;
+export var View = _View;
+export var nestedView = _nestedView;
+export var getSize = _getSize;
+export var noScroll = _noScroll;
