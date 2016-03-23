@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { getSize, noScroll } from './viewport';
+import getSize from './get-size';
+import noScroll from './no-scroll';
 
 const BORDERS_VERTICAL = [
     'borderTop',
@@ -49,13 +50,14 @@ const PADDINGS = [
 
 const ANIMATION_DURATION = 610;
 
-export class View extends React.Component {
+export default class View extends React.Component {
 
     static displayName = 'View';
 
     // Utility methods
-    static noScroll = noScroll;
-    static getViewportSize = getSize;
+    // static noScroll = noScroll;
+    // static getViewportSize = getSize;
+    // static nestedView = nestedView;
 
     static propTypes = {
         color: React.PropTypes.string,
@@ -130,6 +132,7 @@ export class View extends React.Component {
             'explode',
             'implode',
         ]),
+        className: React.PropTypes.string,
     };
 
     static defaultProps = {
@@ -171,6 +174,7 @@ export class View extends React.Component {
         contentStyle: {},
         enterAnimation: null,
         leaveAnimation: null,
+        className: null,
     };
 
     state = {
@@ -185,23 +189,23 @@ export class View extends React.Component {
             this.setState({ ...getSize() });
             window.addEventListener('resize', this.onWindowResize);
         }
-    };
+    }
 
     componentWillUnmount() {
         if (this.props.mode === 'viewport' || this.props.viewport) {
             window.removeEventListener('resize', this.onWindowResize);
         }
-    };
+    }
 
     onWindowResize = () => {
         this.setState({ ...getSize() });
-    };
+    }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.isVisible && !nextProps.isVisible) {
             this.willHide();
         }
-        
+
         if (!this.props.isVisible && nextProps.isVisible) {
             this.willShow();
         }
@@ -265,6 +269,7 @@ export class View extends React.Component {
             contentStyle,
             enterAnimation,
             leaveAnimation,
+            className,
             ...props } = this.props;
 
         var { animationClass } = this.state;
@@ -297,18 +302,18 @@ export class View extends React.Component {
             );
         }
 
-        var className = [];
+        var computedClassName = [className];
 
         if (isVisible && enterAnimation) {
             styles.view.display = null;
-            className.push(enterAnimation);
-            className.push(enterAnimation + '__' + animationClass);
+            computedClassName.push(enterAnimation);
+            computedClassName.push(enterAnimation + '__' + animationClass);
         }
 
         if (!isVisible && leaveAnimation) {
             styles.view.display = null;
-            className.push(leaveAnimation);
-            className.push(leaveAnimation + '__' + animationClass);
+            computedClassName.push(leaveAnimation);
+            computedClassName.push(leaveAnimation + '__' + animationClass);
         }
 
         if (!isVisible && leaveAnimation === null) {
@@ -316,16 +321,16 @@ export class View extends React.Component {
         }
 
 
-        // var className = [
+        // var computedClassName = [
         //     'animated',
         // ];
 
         // if (!isVisible) {
-        //     className.push('animated__hidden');
+        //     computedClassName.push('animated__hidden');
         // }
 
         return (
-            <div {...this.props} style={styles.view} className={className.join(' ')}>
+            <div {...this.props} style={styles.view} className={computedClassName.join(' ')}>
                 <div style={styles.outer}>
                     <div style={styles.inner}>
                         {children}
@@ -333,19 +338,7 @@ export class View extends React.Component {
                 </div>
             </div>
         );
-    };
-}
-
-
-/**
- * Use this decorator to wrap a View into a custom component and being able
- * to nest those components into an existing View structure
- */
-export function nestedView() {
-    return function (WrappedComponent) {
-        WrappedComponent.behavesLikeAView = true;
-        return WrappedComponent;
-    };
+    }
 }
 
 var viewStyle = (props, state) => {
@@ -735,4 +728,3 @@ var alignStyle = (props, styles) => {
     }
     return _;
 };
-
