@@ -1,7 +1,7 @@
 
 import React from 'react';
 import getSize from './get-size';
-import noScroll from './no-scroll';
+// import noScroll from './no-scroll';
 
 const BORDERS_VERTICAL = [
     'borderTop',
@@ -102,11 +102,6 @@ export default class View extends React.Component {
             false,
         ]),
         float: React.PropTypes.oneOf(['left', 'right']),
-        children: React.PropTypes.oneOfType([
-            React.PropTypes.object,
-            React.PropTypes.array,
-            React.PropTypes.string,
-        ]),
         childrenWidth: React.PropTypes.number,
         childrenHeight: React.PropTypes.number,
         childrenColor: React.PropTypes.string,
@@ -133,6 +128,12 @@ export default class View extends React.Component {
             'implode',
         ]),
         className: React.PropTypes.string,
+        children: React.PropTypes.oneOfType([
+            React.PropTypes.object,
+            React.PropTypes.array,
+            React.PropTypes.string,
+            React.PropTypes.number,
+        ]),
     };
 
     static defaultProps = {
