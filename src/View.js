@@ -570,7 +570,7 @@ var flexChildren = (_children, orientation, width, height) => {
     var children = React.Children.map(_children, child => {
         var childProps = {};
 
-        if (child.type && (child.type.displayName === 'View' || child.type.behavesLikeAView)) {
+        if (child && child.type && (child.type.displayName === 'View' || child.type.behavesLikeAView)) {
             var flex = child.props.flex;
             childProps = horizontal ? { height } : { width };
 
@@ -623,7 +623,7 @@ var flexChildren = (_children, orientation, width, height) => {
     });
 
     children = React.Children.map(children, child => {
-        if (child.type && (child.type.displayName === 'View' || child.type.behavesLikeAView)) {
+        if (child && child.type && (child.type.displayName === 'View' || child.type.behavesLikeAView)) {
             var flex = child.props.flex;
             var childProps = horizontal ? { height } : { width };
 

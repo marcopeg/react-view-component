@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
+
     <!-- Include dependencies -->
     <script src="./lib/react/dist/react-with-addons.js"></script>
     <script src="./lib/react/dist/react-dom.js"></script>
@@ -56,12 +56,25 @@
                             </View>
                     </div>
 
+                    <h5>{'null children'}</h5>
+                    <div style={styles.demo}>
+                        <View
+                            color="#eee"
+                            width={200}
+                            height={200}>
+
+                            <View flex={1} color="#aaa">line1</View>
+                            {null}
+                            <View flex={1} color="#ddd">line2</View>
+                        </View>
+                    </div>
+
                 </div>
             );
         }
     }
 
     ReactDOM.render(<DemoApp />, document.getElementById('app'));
-    </script>    
+    </script>
 </body>
 </html>
